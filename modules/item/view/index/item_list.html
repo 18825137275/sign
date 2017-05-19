@@ -1,0 +1,38 @@
+<html lang="zh-cmn-Hans"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <link rel="stylesheet" href="https://weui.io/weui.css">
+    <link rel="stylesheet" href="https://weui.io/example.css">
+</head>
+<body ontouchstart="">
+<div class="page__hd">
+    <h1 class="page__title">活动列表</h1>
+    <p class="page__desc"></p>
+</div>
+<div class="page__bd">
+    <div class="weui-panel weui-panel_access">
+    <div class="weui-panel__bd">
+        {volist name="item" id="i"}
+        <a href="{:url('/info/'.$i['id'])}" class="weui-media-box weui-media-box_appmsg">
+            <div class="weui-media-box__hd">
+                <img class="weui-media-box__thumb" src="__PUBLIC__/image/no_image_100x100.jpg" alt="">
+            </div>
+            <div class="weui-media-box__bd">
+                <h4 class="weui-media-box__title">{$i.title}</h4>
+                <p class="weui-media-box__desc">报名人数：{$i.join_num}</p>
+                <p class="weui-media-box__desc">活动时间：{$i.start_time}</p>
+            </div>
+            <span class="weui-cell__ft"></span>
+        </a>
+        {/volist}
+    </div>
+    <div class="weui-panel__ft">
+        <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">查看更多</div>
+            <span class="weui-cell__ft"></span>
+        </a>
+    </div>
+</div>
+</div>
+</body></html>

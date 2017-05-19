@@ -23,6 +23,7 @@ return [
 	
     'view_replace_str'=>[
     '__PUBLIC__'=>'/static',
+    '__WEUI__'=>'/static/weui',
     '__RES__'=>'/static/view_res',
     '__ADMIN__' =>'/static/view_res/admin',
     'IMG_ROOT'=>'/'

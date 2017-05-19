@@ -13,9 +13,9 @@ class Index extends ItemBase{
 		
     	$this->assign('title',config('SITE_TITLE'));
 	
-		$this->assign('item',Db::name('item')->where('status',1)->order('id desc')->paginate(16));	
+		$this->assign('item',Db::name('item')->where('status',1)->order('id desc')->paginate(10));
 		
-		return $this->fetch();   
+		return $this->fetch('item_list');
     }
 
 	
