@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0" />	
+	<link rel="stylesheet" href="__RES__/common/base.css" />
+	<link rel="stylesheet" href="__RES__/member/css/reg.css" />
+</head>
+<body>		
+	<ul class="form">
+		<li><span>用户名：</span><input class="text" name="username" type="text" /></li>	
+		<li><span>密 码：</span><input class="text" name="password" type="password" /></li>		
+		<li><span></span><input type="submit" id="send" value="登录" /></li>	
+	</ul>	
+</body>
+<script src="__PUBLIC__/js/jquery/jquery-2.0.3.min.js"></script>
+<script src="__PUBLIC__/js/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script>
+	
+	$('#send').click(function(){
+		
+		var username=$("input[name='username']").val();
+		var pwd=$("input[name='password']").val();
+		
+		if(username==''){
+			alert('请输入账号');
+			return false;
+		}else if(pwd==''){
+			alert('请输入密码');
+			return false;
+		}
+		
+		$.post(
+			"/login",
+			{
+				username:username,
+				password:pwd,
+				},
+			function(d){
+				if(d.error){
+					alert(d.error);
+				}else if(d.success){
+					
+					//alert('登录成功');
+					
+					var p=$("#top",window.parent.document).find('ul');						
+					p.html('');					
+					p.append('<li><a href="{:url(\'/member\')}">会员中心</a></li><li><a href="{:url(\'/logout\')}">退出</a></li>');
+							
+					parent.window.art.dialog.list['login'].close();		
+				}
+			}	
+		);
+		
+	});
+
+</script>
+</html>

@@ -1,0 +1,6 @@
+<ul id="top-nav">
+{volist name="top_nav" id="c"}
+	<li> <a href="{:url('/cat/'.$c['id'])}">{$c.name}</a> 
+	</li>
+{/volist}
+</ul>

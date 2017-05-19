@@ -1,0 +1,194 @@
+{extend name="public:member" /}
+{block name="content"}	
+<div class="page-header">
+		<h1>
+			{$breadcrumb1}
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				{$breadcrumb2}
+			</small>
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				{$crumbs}
+			</small>			
+			<button form="form-goods" id="send" type="submit" style="float:right;"  class="btn btn-sm btn-primary">提交</button>			
+		</h1>
+</div>
+	<div class="row">
+	<div class="col-xs-12">	
+		<div class="panel-body">
+        <form action="{:url('Item/edit_item')}" method="post" enctype="multipart/form-data" id="form-goods" class="form-horizontal">
+        
+    
+		<input name="id" type="hidden" value="{$item.id}" />
+		
+          <ul class="nav nav-tabs">
+          	
+          	<li class="active"><a href="#tab-data" data-toggle="tab">基本信息</a></li>          	
+          
+                
+          </ul>
+          <div class="tab-content">
+          		
+	          	<!-- 基本信息 START -->
+	          	<div class="tab-pane active" id="tab-data">
+	          		
+	          		<div class="form-group required">
+		                <label class="col-sm-2 control-label" for="input-image">
+		                <span title="" data-toggle="tooltip" data-original-title="上传800x800的图片">缩略图：</span>
+		                </label>
+		                
+		                <div class="col-sm-10" id="thumb">
+		                  <a id="thumb-image" href="#" data-toggle="image" class="img-thumbnail">
+		                  	
+							<?php if(!empty($item['image'])){ ?>									
+							 	<img src="IMG_ROOT<?php echo resize($item['image'],100,100); ?>" />	
+							 <?php }else{ ?>
+							 	<img src="__PUBLIC__/image/no_image_100x100.jpg" />	
+							 <?php } ?>		
+								
+								
+								</a>
+		                  <input type="hidden" name="image" value="{$item.image|default=''}" id="input-image" />
+		            </div>
+		            
+		            </div>   
+		            
+		            <div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">标题：</label>
+						<div class="col-sm-10">
+							<input  class="form-control" type="text" value="{$item.title|default=''}" name="title">
+						</div>
+					</div>
+		            
+		          
+					
+					
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">联系人：</label>
+						<div class="col-sm-10">
+							<input  class="form-control" type="text" value="{$item.contact|default=''}" name="contact">
+						</div>
+					</div>
+					
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">联系电话：</label>
+						<div class="col-sm-10">
+							<input  class="form-control" type="text" value="{$item.contact_tel|default=''}" name="contact_tel">
+						</div>
+					</div>
+					
+					
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">地点：</label>
+						<div class="col-sm-10">
+							<input  class="form-control" type="text" value="{$item.location|default=''}" name="location">
+						</div>
+					</div>
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">名额：</label>
+						<div class="col-sm-2">
+							<input  class="form-control" type="text" value="{$item.total_num|default=''}" name="total_num">
+						</div>
+					</div>
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">是否需要支付：</label>
+						<div class="col-sm-10">
+								<label class="radio-inline">
+								<input type="radio" value="1" name="is_pay">是</label>
+								<label class="radio-inline">
+								<input type="radio" value="0" name="is_pay">否</label>
+							</div>
+					</div>
+					
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">支付金额：</label>
+						<div class="col-sm-2">
+							<input  class="form-control" type="text" value="{$item.price|default=''}" name="price">
+						</div>
+					</div>
+					
+					<div class="form-group required input-daterange">
+						<label class="col-sm-2 control-label" for="input-name2">报名时间：</label>
+						<div class="col-sm-3">
+							<div class="input-daterange input-group">
+								<input class="input-sm form-control" type="text" name="start_apply_time" value="<?php if($item['start_apply_time']!=0){echo date('Y-m-d',$item['start_apply_time']);} ?>">
+								<span class="input-group-addon">
+								<i class="fa fa-arrow-right"></i>
+								</span>
+								<input class="input-sm form-control" type="text" name="end_apply_time" value="<?php if($item['end_apply_time']!=0){echo date('Y-m-d',$item['end_apply_time']);} ?>">
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group required input-daterange">
+						<label class="col-sm-2 control-label" for="input-name2">活动时间：</label>
+						<div class="col-sm-3">
+							<div class="input-daterange input-group">
+								<input class="input-sm form-control" type="text" name="start_time" value="<?php if($item['start_time']!=0){echo date('Y-m-d',$item['start_time']);} ?>">
+								<span class="input-group-addon">
+								<i class="fa fa-arrow-right"></i>
+								</span>
+								<input class="input-sm form-control" type="text" name="end_time" value="<?php if($item['end_time']!=0){echo date('Y-m-d',$item['end_time']);} ?>">
+							</div>
+						</div>
+					</div>
+					
+					
+		            
+		           
+		            
+	          	</div>
+	          	<!-- 基本信息 END -->
+	          	
+	          
+	          	
+	          
+          </div>
+        </form>
+	</div>
+	</div>
+</div>
+{/block}
+{block name="javascript"}
+ <link rel="stylesheet" href="__ADMIN__/ace/css/datepicker.min.css" />
+
+<link rel="stylesheet" href="__ADMIN__/ace/css/daterangepicker.min.css" />
+
+
+<script src="__ADMIN__/ace/js/moment.min.js"></script>
+<script src="__ADMIN__/ace/js/bootstrap-datepicker.min.js"></script>
+
+<script src="__ADMIN__/ace/js/bootstrap-datepicker.zh-CN.js"></script>
+
+<script>
+
+$('.input-daterange').datepicker({
+            language: 'zh-CN',
+            autoclose: true,
+            todayHighlight: true,
+            format:'yyyy-mm-dd'
+});
+
+
+$('#send').click(function(){
+	
+	var title=$('input[name="title"]').val();
+	
+
+	if(title==''){
+		alert('标题必填');
+		return false;
+	}
+	
+	
+	return true;
+});    
+
+$(function(){	
+
+Oscshop.setValue("is_pay", {$item.is_pay|default=0});
+
+});   
+</script>
+{/block}

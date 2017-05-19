@@ -1,0 +1,76 @@
+{extend name="public:member" /}
+{block name="content"}	
+<div class="page-header">
+		<h1>
+			{$breadcrumb1}
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				{$breadcrumb2}
+			</small>
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				{$crumbs}
+			</small>			
+			<button form="form-goods" id="send" type="submit" style="float:right;"  class="btn btn-sm btn-primary">提交</button>			
+		</h1>
+</div>
+	<div class="row">
+	<div class="col-xs-12">	
+		<div class="panel-body">
+        <form action="{:url('Item/edit_data')}" method="post" enctype="multipart/form-data" id="form-goods" class="form-horizontal">
+        
+       
+		  <input name="item_data_id" type="hidden" value="{$item.item_data_id}" />
+		
+          <ul class="nav nav-tabs">
+          	
+          	<li class="active"><a href="#tab-data" data-toggle="tab">详情</a></li>          	
+          
+                
+          </ul>
+          <div class="tab-content">
+          		
+	          	
+	          	<div class="tab-pane active" id="tab-data">
+	          		
+	          		<div class="form-group">
+	                    <label class="col-sm-2 control-label" for="input-description">简介：</label>
+	                    <div class="col-sm-10">
+	                      <textarea name="summary" class="form-control" rows="5">{$item.summary|default=''}</textarea>	
+	                    </div>
+                  	</div>
+					<div class="form-group">
+	                    <label class="col-sm-2 control-label" for="input-description">详情：</label>
+	                    <div class="col-sm-10">
+	                      
+	                      <textarea name="description" placeholder="详情" id="description" class="form-control">{$item.description|default=''}</textarea>
+	                    </div>
+                  	</div>
+		            
+		           
+		            
+	          	</div>
+	          
+	          	
+	          
+	          	
+	          
+          </div>
+        </form>
+	</div>
+	</div>
+</div>
+{/block}
+{block name="javascript"}
+<script src="__PUBLIC__/js/ckeditor/ckeditor.js"></script> 
+<script>
+	CKEDITOR.replace('description', {
+		filebrowserImageUploadUrl: '{:url("member/FileManager/ckupload")}',	
+		toolbar: [
+					[ 'Source', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ],
+					[ 'FontSize', 'TextColor', 'BGColor' ],
+					[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','Image','Format']
+				]	
+	});
+</script>
+{/block}

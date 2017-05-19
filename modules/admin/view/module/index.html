@@ -1,0 +1,62 @@
+{extend name="public:base" /}
+
+{block name="content"}
+<div class="page-header">
+	<h1>	
+		{$breadcrumb1}
+		<small>
+			<i class="ace-icon fa fa-angle-double-right"></i>
+			{$breadcrumb2}
+		</small>
+	</h1>
+</div>	
+
+
+	
+<div class="row">
+	<div class="col-xs-12">	
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<td>模块</td> 
+						<td>模块名称</td> 	
+						<td>作者</td>	
+						<td>状态</td>		
+						<td>操作</td>				
+					</tr>
+				</thead>
+				<tbody>
+						
+						{volist name="list" id="module"}
+							<tr>
+								<td>{$module.module}</td>
+								<td>{$module.modulename}</td>
+								<td>{$module.author}</td>
+								<td>
+									
+									
+									{switch name="module.disabled"}
+										{case value="1"}<a title="点击禁用" href='{:url("Module/set_status",array("module"=>$module["module"],"status"=>2))}'><span class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></span></a>{/case}
+										{case value="2"}<a title="点击启用" href='{:url("Module/set_status",array("module"=>$module["module"],"status"=>1))}'><span class="btn btn-xs btn-danger"><i class="fa fa-remove bigger-120"></i></span></a>{/case}
+									{/switch}
+									
+								</td>
+								<td>
+									{switch name="module.disabled"}
+										{case value="1"}<a title="点击卸载" href='{$root}/{$module.module}/install/uninstall'><span class="btn btn-danger"><i class="fa fa-minus-circle bigger-120"></i></span></a>{/case}
+										{case value="2"}<a title="点击安装" href='{$root}/{$module.module}/install/install'><span class="btn btn-success"><i class="fa fa-plus-circle bigger-120"></i></span></a>{/case}
+									{/switch}
+									
+									<a href='{$root}/{$module.module}/install/edit_module'><span class="btn btn-info"><i class="fa fa-cog bigger-120"></i></span></a>
+								</td>
+							</tr>
+						{/volist}
+						
+				</tbody>
+				
+			</table>
+		</div>
+	</div>
+</div>
+{/block}

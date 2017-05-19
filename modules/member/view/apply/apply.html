@@ -1,0 +1,71 @@
+<?php 
+	if(isset($error)){
+		die($error);
+	}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0" />	
+	<link rel="stylesheet" href="__RES__/common/base.css" />
+	<link rel="stylesheet" href="__RES__/member/css/reg.css" />
+</head>
+<body>		
+	<ul class="form">
+		
+		<li><span>姓名：</span><input class="text" name="name" type="text" /></li>
+		<li><span>联系电话：</span><input class="text" name="tel" type="text" /></li>
+	
+		<li><span></span><input type="submit" id="send" value="报名" /></li>
+	</ul>	
+</body>
+<script src="__PUBLIC__/js/jquery/jquery-2.0.3.min.js"></script>
+<script src="__PUBLIC__/js/jquery/jquery-migrate-1.2.1.min.js"></script>
+
+<script>
+	
+	$('#send').click(function(){
+		
+		var name=$("input[name='name']").val();
+		var tel=$("input[name='tel']").val();
+		
+		
+		if(name==''){
+			alert('请输入姓名');
+			return false;
+		}else if(tel==''){
+			alert('请输入联系电话');
+			return false;
+		}
+		
+		$.post(
+			"/apply/{$Request.param.id}",
+			{	
+				name:name,
+				tel:tel
+			},
+			function(d){
+				if(d.error){
+					alert(d.error);
+					parent.window.art.dialog.list['apply'].close();
+				}else if(d.success){		
+					
+					if(d.location){
+						window.location.href=d.location;
+						return ;
+					}else{
+						alert(d.success);
+					
+						parent.window.art.dialog.list['apply'].close();
+					}
+		
+				}
+			}	
+		);
+		
+	});
+
+</script>
+</html>

@@ -1,0 +1,15 @@
+{volist name="option" id="o"}
+<div class="form-group required">
+	<label class="col-sm-2 control-label">{$o.name}：</label>
+	<div class="col-sm-10">			
+			{if condition="isset($o['value'])"}
+				{foreach name="o['value']" item="v" key="k" }  
+					<label class="radio-inline" style="float: left;">					
+						<input type="radio" value="{$v.option_value_id}" name="option[{$o.option_id}]">{$v.value_name}
+					</label>
+				{/foreach}
+			{/if}
+			
+		</div>
+</div>
+{/volist}

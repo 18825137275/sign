@@ -1,0 +1,107 @@
+{extend name="public:frontend" /}
+{block name="content"}
+	{if condition="!empty($option_value)"}
+	<div id="option" class="allWrap">
+		{volist name="option_value" id="o"}
+			<div class="clearfix option-value">
+				<span style="float:left;">{$o.name}:</span>
+				{if condition="isset($o['value'])"}
+				<ul>					
+					{volist name="$o['value']" id="v"}
+						<li class="radio" id="{$v.option_value_id}">{$v.value_name}</li>
+					{/volist}
+				</ul>
+				{/if}
+			</div>
+		{/volist}
+	</div>		
+	{/if}	
+	<div id="item" class="allWrap">
+		<div class="clearfix">
+			{volist name="item" id="i"}
+			 <dl>
+			 	<dt><a href="{:url('/info/'.$i['id'])}">
+			 		{if condition="!empty($i['image'])"}
+			 		<img src="IMG_ROOT{$i.image|resize=200,200}">
+			 		{else /}
+			 		<img src="__PUBLIC__/image/no_image_100x100.jpg">
+			 		{/if}
+			 		</a>
+			 		</dt>
+			 	<dd><a href="{:url('/info/'.$i['id'])}">{$i.title}</a></dd>
+			 </dl>
+			{/volist}
+		</div>
+		<div id="page" class="clearfix">{$item->render()}</div>
+		<div id="total" class="clearfix">总计 {$item->total()|default="0"} </div>
+	</div>
+{/block}
+{block name="javascript"}
+<style>
+	.hover{
+		background:#aaa;
+	}
+</style>
+<script>
+
+function get_url_attr(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]); return null;
+} 
+
+var option=get_url_attr('o');
+	
+if(option){
+	 
+	 var ch = new Array;
+	 ch = option.split(",");	
+	 
+	 if(ch.length==1){
+		 $('#'+option).addClass('hover');
+	 }else if(ch.length>1){			 
+		 		 
+		 for(i=0;i<ch.length;i++){		  
+			$('#'+ch[i]).addClass('hover');
+		}
+	 }
+	
+}
+
+$(function(){
+	$('.radio').click(function(){
+
+		if(option){
+			if($(this).hasClass('hover')){
+				$(this).removeClass('hover');
+			}else{
+				$(this).siblings().removeClass('hover')
+				$(this).addClass('hover');
+			}
+		}else{
+				$(this).addClass('hover');
+		}
+		
+		var length=$('#option li.hover').size();			
+		
+		var param='?o=';
+		
+		var url = "{:url('/cat')}"+'/'+'{$Request.param.id}';			
+		
+		$('#option li.hover').each(function(i){
+			
+			if(i<length-1){
+				param+=$('#option li.hover').eq(i).attr('id')+',';
+			}else{
+				param+=$('#option li.hover').eq(i).attr('id');
+			}
+			
+		});
+		
+		url+=param;
+		
+		window.location.href = url;		
+	});
+});
+</script>
+{/block}

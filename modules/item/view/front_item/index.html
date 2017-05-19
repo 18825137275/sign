@@ -1,0 +1,93 @@
+{extend name="public:frontend" /}
+{block name="content"}
+<div id="info">
+	<div  class="allWrap">
+		<div id="left-content">
+			<div id="gallery">
+				<img src="IMG_ROOT{$info.image|resize=300,300}" />
+			</div>
+			
+		</div>
+		<div id="right-content">
+			<div id="item-info">
+				<dl>
+					<dt>{$info.title}</dt>
+					<dd><span>活动时间：</span>
+						{if condition="$info['start_time'] eq 0"}
+							不限
+						{else/}
+							{$info.start_time|date="Y-m-d",###}
+						{/if}
+						~
+						{if condition="$info['end_time'] eq 0"}
+							不限
+						{else/}
+							{$info.end_time|date="Y-m-d",###}
+						{/if}
+					
+					</dd>
+					<dd><span>活动地点：</span>{$info.location}</dd>
+					
+					{if condition="$info['is_pay'] eq 1"}
+					<dd><span>费用：</span>{$info.price}</dd>
+					{/if}
+					
+					<dd><span>联系人：</span>{$info.contact}</dd>
+					<dd><span>联系电话：</span>{$info.contact_tel}</dd>
+					
+					
+					
+					<dd><span>已报名人数：</span>{$info.join_num}</dd>
+					<dd><span>剩余名额：</span>
+						
+						{if condition="$info['total_num'] eq 0"}
+							不限
+						{else/}
+							{$info.total_num-$info.join_num}
+						{/if}						
+						
+					</dd>
+					<dd><span>报名截止：</span>{if condition="$info['end_apply_time'] eq 0"}不限{else/}{$info.end_apply_time|date="Y-m-d",###}{/if} </dd>
+					<dd><span> </span><button id="apply" type="button">我要报名</button></dd>
+				</dl>
+			</div>
+			
+			<div id="item_content">
+				{$info.description|htmlspecialchars_decode}
+			</div>
+			
+			<div id="apply_member">
+				
+			</div>
+			<div id="replay">
+				
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+{/block}
+{block name="javascript"}
+<script>
+$('#apply').click(function(){
+	$.post(
+		"{:url('/check_login')}",		
+		function(d){
+			if(d.error){
+				art.dialog.open("/login", 
+					{	id:'login',
+						title: '登录',
+						lock: true
+					});
+			}else{
+				art.dialog.open("/apply/{$info.id}", 
+					{	id:'apply',
+						title: '报名',
+						lock: true
+					});
+			}
+		}
+	);
+});	
+</script>
+{/block}

@@ -1,0 +1,23 @@
+{extend name="public:frontend" /}
+{block name="content"}
+
+	<div id="item" class="allWrap">
+		<div class="clearfix">
+			{volist name="item" id="i"}
+			 <dl>
+			 	<dt><a href="{:url('/info/'.$i['id'])}">
+			 		{if condition="!empty($i['image'])"}
+			 		<img src="IMG_ROOT{$i.image|resize=200,200}">
+			 		{else /}
+			 		<img src="__PUBLIC__/image/no_image_100x100.jpg">
+			 		{/if}
+			 		</a>
+			 		</dt>
+			 	<dd><a href="{:url('/info/'.$i['id'])}">{$i.title}</a></dd>
+			 </dl>
+			{/volist}
+		</div>
+		<div id="page" class="clearfix">{$item->render()}</div>
+		<div id="total" class="clearfix">总计 {$item->total()|default="0"} </div>
+	</div>
+{/block}

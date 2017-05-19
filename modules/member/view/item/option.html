@@ -1,0 +1,112 @@
+{extend name="public:member" /}
+{block name="content"}	
+<div class="page-header">
+		<h1>
+			{$breadcrumb1}
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				{$breadcrumb2}
+			</small>
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				{$crumbs}
+			</small>			
+			<button form="form-goods" id="send" type="submit" style="float:right;"  class="btn btn-sm btn-primary">提交</button>			
+		</h1>
+</div>
+	<div class="row">
+	<div class="col-xs-12">	
+		<div class="panel-body">
+        <form action="{:url('Item/edit_option')}" method="post" enctype="multipart/form-data" id="form-goods" class="form-horizontal">
+        
+       
+		 <input name="item_id" type="hidden" value="{$item.id}" />
+		
+          <ul class="nav nav-tabs">
+          	
+          	<li class="active"><a href="#tab-data" data-toggle="tab">搜索选项</a></li>          	
+          
+                
+          </ul>
+          <div class="tab-content">
+          		
+	          	
+	          	<div class="tab-pane active" id="tab-data">
+	          		<div class="form-group">
+					<div class="col-sm-2">
+						
+						<select id="category" class="form-control" multiple="multiple" name="category" style="height: 400px;">
+							{volist name="category" id="c"}
+								<option {if condition="$item['cid'] eq $c['id'] "} selected="selected" {/if}  value="{$c.id}">{$c.name}</option>
+							{/volist}
+						</select>
+						
+					</div>
+					<div class="col-sm-10 control-label" id="option">
+						
+					</div>
+					</div>
+	          	</div>
+	          
+	          	
+	          
+	          	
+	          
+          </div>
+        </form>
+	</div>
+	</div>
+</div>
+{/block}
+{block name="javascript"}
+
+<script>
+
+    
+	
+
+	$('#send').click(function(){
+		
+		var title=$('input[name="title"]').val();
+		
+		var category=$('#category').val();
+		
+		if(title==''){
+			alert('标题必填');
+			return false;
+		}
+		if(category==null){
+			alert('搜索选项必填');
+			return false;
+		}
+		
+		
+		return true;
+	});   
+	
+$(function(){	
+	
+$('#category').change(function(){ 
+	 $.ajax({
+			url: '{:url("Item/get_option_value")}' + '/cid/' + $('#category').val(),
+			dataType: 'html',				
+			success: function(html) {
+				$('#option').html('');
+				$('#option').append(html);
+			}
+			
+		});
+});	
+    
+$('select[name=\'category\']').trigger('change');	
+	
+$("#option").ajaxComplete(function(){ 
+	{volist name ="item_option" id="o"}
+		Oscshop.setValue("option[{$o.option_id}]", {$o.option_value_id});
+	{/volist}
+}); 
+
+});  
+	
+</script>
+{/block}
